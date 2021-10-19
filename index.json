@@ -1,0 +1,101 @@
+[
+{
+    "title": "4 qrt dutct oven",
+    "price": "$99.99",
+    "description": "4 quart dutch oven pot",
+    "image":"public/4qrtPot.jpg",
+    "category": {
+        "type":"dutch oven",
+        "material":"cast iron"
+
+    }
+  },
+  {
+    "title": "5 qrt dutct oven",
+    "price": "$149.99",
+    "description": "5 quart dutch oven pot",
+    "image":"public/5qrtPot.jpg",
+    "category": {
+        "type":"dutch oven",
+        "material":"cast iron"
+
+    }
+  },
+  {
+    "title": "7 qrt dutct oven",
+    "price": "$199.99",
+    "description": "7 quart dutch oven pot",
+    "image":"public/7qrtPot.jpg",
+    "category": {
+        "type":"dutch oven",
+        "material":"cast iron"
+
+    }
+  },
+  {
+    "title": "10 in Frying Pan",
+    "price": "$99.99",
+    "description": "10 in Frying Pan",
+    "image":"public/10inFryPan.jpg",
+    "category": {
+        "type":"fry pan",
+        "material":"cast iron"
+
+    }
+  },
+  {
+    "title": "10 in Crepe Pan",
+    "price": "$99.99",
+    "description": "10 in Crepe Pan",
+    "image":"public/crrepeFryPan.jpg",
+    "category": {
+        "type":"fry pan",
+        "material":"steel"
+
+    }
+},
+{
+    "title": "Oval Fry Pan",
+    "price": "$99.99",
+    "description": "Oval Fry Pan",
+    "image":"public/ovalFryPan.jpg",
+    "category": {
+        "type":"fry pan",
+        "material":"steel"
+
+    }
+},
+{
+    "title": "8 x 8 Bakeware",
+    "price": "$49.99",
+    "description": "8 x 8 Bakeware",
+    "image":"public/8inx8inBakeware.jpg",
+    "category": {
+        "type":"Bakeware",
+        "material":"ceramic"
+
+    }
+},
+{
+    "title": "10 in BreadPan",
+    "price": "$199.99",
+    "description": "cast iron BreadPan",
+    "image":"public/breadPan.jpg",
+    "category": {
+        "type":"Bakeware",
+        "material":"cast iron"
+
+    }
+},
+{
+    "title": "OvalBakeware",
+    "price": "$49.99",
+    "description": "Oval Bakeware",
+    "image":"public/ovalBakeware.jpg",
+    "category": {
+        "type":"Bakeware",
+        "material":"ceramic"
+
+    }
+}
+]
