@@ -1,6 +1,6 @@
-import clientPromise from "../../lib/mongodb";
+import clientPromise from "../../../lib/mongodb";
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   const db = await clientPromise;
   const products = await db
     .db("cookwarestore")
@@ -8,4 +8,4 @@ export default async (req, res) => {
     .find({})
     .toArray();
   res.status(200).json(products);
-};
+}
