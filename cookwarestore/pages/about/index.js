@@ -1,3 +1,11 @@
+import SimpleLayout from "../../components/layout/simple";
+
 export default function About() {
-    return <h1>About</h1>
-  }
+  return (
+    <SimpleLayout>
+      <div className="row">
+        About Form
+      </div>
+    </SimpleLayout>
+  )
+}

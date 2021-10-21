@@ -1,5 +1,11 @@
+import SimpleLayout from "../../components/layout/simple";
+
 export default function Shop() {
-    return <h1>Shop
-        
-    </h1>
-  }
+  return (
+    <SimpleLayout>
+      <div className="row">
+        Shop Form
+      </div>
+    </SimpleLayout>
+  )
+}

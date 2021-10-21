@@ -1,3 +1,11 @@
+import SimpleLayout from "../../components/layout/simple";
+
 export default function Contact() {
-    return <h1>Contact</h1>
-  }
+  return (
+    <SimpleLayout>
+      <div className="row">
+        Contact Form
+      </div>
+    </SimpleLayout>
+  )
+}
