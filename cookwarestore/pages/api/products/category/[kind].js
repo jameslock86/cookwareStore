@@ -1,6 +1,6 @@
 import clientPromise from "../../../../lib/mongodb";
 //endpoint to access category material
-//http://localhost:3000/api/products/category/material?material=frypan
+//http://localhost:3000/api/products/category/material?material=steel
 //endpoint to acces category type
 //http://localhost:3000/api/products/category/type?type=frypan
 
