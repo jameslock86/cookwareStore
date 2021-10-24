@@ -30,7 +30,7 @@ const getProducts = async (req, res) => {
 
 const postProduct = async (req, res) => {
   const form = new formidable.IncomingForm();
-  form.uploadDir = "./public/uploads";
+  form.uploadDir = "./public/uploads/products";
   form.keepExtensions = true;
   form.mulitples = true;
   form.parse(req, async (err, fields, files) => {
