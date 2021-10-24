@@ -11,29 +11,27 @@ export default async function getProductsByCategoryHandler(req, res) {
     const db = await clientPromise;
     //to access category material
     if (kind === "material") {
+      const { material } = req.query;
       const productsInCatergoryMaterial = await db
         .db("cookwarestore")
         .collection("products")
         .find({
-          "category.material": req.query.material,
+          "category.material": material,
         })
         .toArray();
       res.status(200).json(productsInCatergoryMaterial);
-    } else {
-      res.send("incorrect URL for materials category");
     }
     //to access category type
     if (kind === "type") {
+      const { type } = req.query;
       const productsInCatergoryType = await db
         .db("cookwarestore")
         .collection("products")
         .find({
-          "category.type": req.query.type,
+          "category.type": type,
         })
         .toArray();
       res.status(200).json(productsInCatergoryType);
-    } else {
-      res.send("incorrect URL for types category");
     }
   } else {
     res.send("Only GET request allowed");
