@@ -10,21 +10,35 @@ export default function Home({ isConnected }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SimpleLayout>
-      <section className="jumbotron text-center">
-        <div className="container">
-          <h1>Subscribe to GyanBlog</h1>
-          <p className="lead text-muted">
-            Learn and Share
-          </p>
-        </div>
-      </section>
+        <section>
+          <div className="hero">
+            <h1 className="heroTitle"> Cookware and Cookbook</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, architecto, exercitationem obcaecati nihil.</p>
+            <button><a href="#">Lean More</a></button>
+          </div>
+        </section>
+        <section>
+          <div className="sectionTwo">
 
-      <div className="row">
-        <h1>Hey People</h1>
-        <p>
-          For understanding of this project, see: 
-        </p>
-      </div>
+          </div>
+        </section>
+        <section>
+          <div className="sectionThree">
+            <h2>New Arivals</h2>
+            <div className="newArivalProducts">
+              
+            </div>
+            <button>
+              <a href="#">SEE MORE PRODUCTS</a>
+            </button>
+          </div>
+        </section>
+        <section>
+          <div className="sectionFour">
+            <h2 className="sectionFourTitle">Our Cookbook</h2>
+          </div>
+        </section>
+
     </SimpleLayout>
 
     </div>
