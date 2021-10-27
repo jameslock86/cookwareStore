@@ -1,10 +1,23 @@
+//endpoint to get, update, or delete a product
+//http://localhost:3000/api/products/productId
+
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
 export default async (req, res) => {
-  if (req.method === "GET") {
-    const { db } = await connectToDatabase();
-    const { productId } = req.query;
+  const { db } = await connectToDatabase();
+  switch (req.method) {
+    case "GET":
+      return getProduct(req, res, db);
+    case "PATCH":
+      return updateProduct(req, res, db);
+    case "DELETE":
+      return deleteProduct(req, res, db);
+  }
+};
 
+const getProduct = async (req, res, db) => {
+  if (req.method === "GET") {
+    const { productId } = req.query;
     if (productId.length === 24) {
       const id = ObjectId(productId);
       const product = await db.collection("products").findOne({
@@ -18,3 +31,6 @@ export default async (req, res) => {
     res.send("Must be a GET request");
   }
 };
+
+const updateProduct = async (req, res, db) => {};
+const deleteProduct = async (req, res, db) => {};
