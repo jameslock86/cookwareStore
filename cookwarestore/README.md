@@ -1,7 +1,7 @@
 <!-- notes for james 
 use const get inital props -->
 
-
+<!-- adding some text to the readMe Page in the JamesWorkingOnHome Branch  -->
 
 ## Example app using MongoDB
 
