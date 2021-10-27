@@ -33,4 +33,11 @@ const getProduct = async (req, res, db) => {
 };
 
 const updateProduct = async (req, res, db) => {};
-const deleteProduct = async (req, res, db) => {};
+const deleteProduct = async (req, res, db) => {
+  const { productId } = req.query;
+  const id = ObjectId(productId);
+  const deletedProduct = await db.collection("products").findOneAndDelete({
+    _id: id,
+  });
+  res.status(200).json({ productDeleted: deletedProduct.value });
+};
