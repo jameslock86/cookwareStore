@@ -3,6 +3,7 @@
 
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+
 export default async (req, res) => {
   const { db } = await connectToDatabase();
   switch (req.method) {
@@ -16,28 +17,52 @@ export default async (req, res) => {
 };
 
 const getProduct = async (req, res, db) => {
-  if (req.method === "GET") {
-    const { productId } = req.query;
-    if (productId.length === 24) {
-      const id = ObjectId(productId);
-      const product = await db.collection("products").findOne({
-        _id: id,
-      });
-      res.status(200).json(product);
+  try {
+    if (req.method === "GET") {
+      const { productId } = req.query;
+      if (productId.length === 24) {
+        const id = ObjectId(productId);
+        const product = await db.collection("products").findOne({
+          _id: id,
+        });
+        res.status(200).json(product);
+      } else {
+        res.send("Product does not exist");
+      }
     } else {
-      res.send("Product does not exist");
+      res.send("Must be a GET request");
     }
-  } else {
-    res.send("Must be a GET request");
+  } catch (err) {
+    console.log("err", err);
   }
 };
 
-const updateProduct = async (req, res, db) => {};
+const updateProduct = async (req, res, db) => {
+  //receive data in form-data format
+  try {
+    const { productId } = req.query;
+    const id = ObjectId(productId);
+    const updateProduct = await db.collection("products").updateOne(
+      {
+        _id: id,
+      },
+      {
+        $set: {},
+      }
+    );
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 const deleteProduct = async (req, res, db) => {
-  const { productId } = req.query;
-  const id = ObjectId(productId);
-  const deletedProduct = await db.collection("products").findOneAndDelete({
-    _id: id,
-  });
-  res.status(200).json({ productDeleted: deletedProduct.value });
+  try {
+    const { productId } = req.query;
+    const id = ObjectId(productId);
+    const deletedProduct = await db.collection("products").findOneAndDelete({
+      _id: id,
+    });
+    res.status(200).json({ productDeleted: deletedProduct.value });
+  } catch (err) {
+    console.log("err", err);
+  }
 };
