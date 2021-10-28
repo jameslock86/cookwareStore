@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default function Navbars() {
   return (
-    <Navbar sticky="top" expand="lg">
+    <Navbar expand="lg">
     <Container fluid>
       <Navbar.Brand href="#">Cookware & CookBooks</Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarScroll" />
