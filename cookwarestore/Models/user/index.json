@@ -1,0 +1,19 @@
+[
+  {
+    "id": "",
+    "email": "",
+    "username":"",
+    "password": "",
+    "name": {
+      "firstname": "",
+      "lastname": ""
+    },
+    "address": {
+      "city": "",
+      "street": "",
+      "number": 0,
+      "zipcode": ""
+    },
+    "phone": ""
+  }
+]
