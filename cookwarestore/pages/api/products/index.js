@@ -9,6 +9,7 @@ export const config = {
     bodyParser: false,
   },
 };
+const collection = "products";
 
 export default async function productsHandler(req, res) {
   const { db } = await connectToDatabase();
@@ -17,7 +18,7 @@ export default async function productsHandler(req, res) {
     case "GET":
       return getProducts(req, res, db);
     case "POST":
-      return postProduct(req, res, db);
+      return addProduct(req, res, db);
     default:
       return "GET or POST request only";
   }
@@ -25,7 +26,7 @@ export default async function productsHandler(req, res) {
 
 const getProducts = async (req, res, db) => {
   try {
-    const products = await db.collection("products").find({}).toArray();
+    const products = await db.collection(collection).find({}).toArray();
     res.status(200).json(products);
   } catch (err) {
     console.log("err", err);
@@ -34,7 +35,7 @@ const getProducts = async (req, res, db) => {
 
 //post product is in this file cause [productId].js api is only to access products that already exist
 //if post products was in [productId].js, you will need to include an id, which doesn't exist, to the endpoint
-const postProduct = async (req, res, db) => {
+const addProduct = async (req, res, db) => {
   //receive data in form-data format
   try {
     const form = new formidable.IncomingForm();
@@ -53,7 +54,7 @@ const postProduct = async (req, res, db) => {
         res.json({ msg: "product already exist", productInDB });
       } else {
         //add product to database
-        await db.collection("products").insertOne(
+        await db.collection(collection).insertOne(
           {
             title: title,
             price: price,
@@ -79,7 +80,7 @@ const postProduct = async (req, res, db) => {
 /* helper functions */
 
 const checkIfProductExist = async (db, title) => {
-  const product = await db.collection("products").findOne({ title });
+  const product = await db.collection(collection).findOne({ title });
   if (product) {
     return { productExist: true, productInDB: product };
   } else {
