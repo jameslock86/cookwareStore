@@ -3,7 +3,7 @@
 import formidable from "formidable";
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
-
+const collection = "products";
 export default async (req, res) => {
   const { db } = await connectToDatabase();
   switch (req.method) {
@@ -18,16 +18,17 @@ export default async (req, res) => {
 
 const getProduct = async (req, res, db) => {
   try {
-     const { productId } = req.query;
+
+    const { productId } = req.query;
     if (productId.length === 24) {
       const id = ObjectId(productId);
-      const product = await db.collection("products").findOne({
+      const product = await db.collection(collection).findOne({
         _id: id,
       });
       res.status(200).json(product);
-      } else {
-        res.send("Product does not exist");
-      }
+    } else {
+      res.send("Product does not exist");
+    }
   } catch (err) {
     console.log("err", err);
   }
@@ -66,11 +67,12 @@ const updateProduct = async (req, res, db) => {
     console.log("err", err);
   }
 }
+
 const deleteProduct = async (req, res, db) => {
   try {
     const { productId } = req.query;
     const id = ObjectId(productId);
-    const deletedProduct = await db.collection("products").findOneAndDelete({
+    const deletedProduct = await db.collection(collection).findOneAndDelete({
       _id: id,
     });
     res.status(200).json({ productDeleted: deletedProduct.value });
