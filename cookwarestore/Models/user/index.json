@@ -14,15 +14,6 @@
       "number": 0,
       "zipcode": ""
     },
-    "phone": "",
-    "cart":  {
-      "id":"",
-      "products":[
-        {
-          "productId":"",
-          "quantity": 0
-        }
-      ]
-    }
+    "phone": ""
   }
 ]
