@@ -1,4 +1,4 @@
-import clientPromise from "../../../lib/mongodb";
+import { connectToDatabase } from "../../../lib/mongodb";
 
 export default async function getCartsByUserIdHandler(req, res) {
   console.log("req", req.query);

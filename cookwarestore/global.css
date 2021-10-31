@@ -11,3 +11,16 @@
       Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   }
   
+  .container{
+    max-width: 100vw;
+  }
+.hero{
+  
+  height:600px;
+  width: 100vw;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow:hidden;
+  z-Index:-1;
+  
+}

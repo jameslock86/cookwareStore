@@ -1,6 +1,14 @@
 import Head from "next/head";
 import Link from "next/link";
 import SimpleLayout from "../components/layout/simple.jsx";
+import { urlObjectKeys } from "next/dist/shared/lib/utils";
+
+import  Image  from "next/image";
+const backgroundStyling = {
+  backgroundImage: `url('../BackgroundHeroImage.jpg')`,
+
+}
+
 
 export default function Home({ isConnected }) {
   return (
@@ -11,11 +19,15 @@ export default function Home({ isConnected }) {
       </Head>
       <SimpleLayout>
         <section>
-          <div className="hero">
-            <h1 className="heroTitle"> Cookware and Cookbook</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, architecto, exercitationem obcaecati nihil.</p>
-            <button><a href="#">Lean More</a></button>
-          </div>
+            <div className="hero" style={backgroundStyling} layout="responsive">
+              <h1 className="heroTitle"> Cookware and Cookbook</h1>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo, architecto, exercitationem obcaecati nihil.</p>
+              <button><a href="#">Lean More</a></button>
+            </div>  
+          
+     
+           
+
         </section>
         <section>
           <div className="sectionTwo">
