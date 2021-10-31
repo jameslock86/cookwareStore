@@ -5,6 +5,7 @@
     "price": "",
     "description": "",
     "image":"",
+    "quantity": 0,
     "category": {
         "type":"",
         "material":""

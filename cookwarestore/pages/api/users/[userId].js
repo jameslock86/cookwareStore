@@ -20,6 +20,15 @@ const getUser = (req, res, db) => {};
 
 const addUser = (req, res, db) => {};
 
-const updateUser = (req, res, db) => {};
+const updateUser = (req, res, db) => {
+  // const updateProduct = await db.collection("products").updateOne(
+  //   {
+  //     _id: id,
+  //   },
+  //   {
+  //     $set: { price: fields.price },
+  //   }
+  // );
+};
 
 const deleteUser = (req, res, db) => {};
