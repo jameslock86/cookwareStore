@@ -18,7 +18,6 @@ export default async (req, res) => {
 
 const getProduct = async (req, res, db) => {
   try {
-
     const { productId } = req.query;
     if (productId.length === 24) {
       const id = ObjectId(productId);
@@ -33,7 +32,6 @@ const getProduct = async (req, res, db) => {
     console.log("err", err);
   }
 };
-
 
 //data received from the client-side must be in form-data format
 const updateProduct = async (req, res, db) => {
@@ -52,7 +50,7 @@ const updateProduct = async (req, res, db) => {
       // const { productId } = req.query;
       // const id = ObjectId(productId);
 
-      // const updateProduct = await db.collection("products").updateOne(
+      // const updateProduct = await db.collection(collection).updateOne(
       //   {
       //     _id: id,
       //   },
@@ -66,7 +64,7 @@ const updateProduct = async (req, res, db) => {
   } catch (err) {
     console.log("err", err);
   }
-}
+};
 
 const deleteProduct = async (req, res, db) => {
   try {
