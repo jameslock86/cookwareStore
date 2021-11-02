@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import SimpleLayout from "../components/layout/simple.jsx";
 import { urlObjectKeys } from "next/dist/shared/lib/utils";
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 
 //images
 import  Image  from "next/image";
@@ -79,6 +81,62 @@ export default function Home({ isConnected }) {
             <h2>New Arivals</h2>
             <div className="newArivalProducts">
               
+               <div className="newArivalProducts">
+                  <div className="row mb-2">
+                     <div className="col-md-3"><Card style={{ width: '18rem' }}>
+                      <Image alt="Vercel logo" src={Section2Image2} width={200} height={200} />
+                        <Card.Body>
+                          <Card.Title>Card Title</Card.Title>
+                          <Card.Text>
+                            Some quick example text to build on the card title and make up the bulk of
+                            the card's content.
+                          </Card.Text>
+                          <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                      </Card>
+                      </div>
+                      <div className="col-md-3"><Card style={{ width: '18rem' }}>
+                        <Image alt="Vercel logo" src={Section2Image2} width={200} height={200} />
+                        <Card.Body>
+                          <Card.Title>Card Title</Card.Title>
+                          <Card.Text>
+                            Some quick example text to build on the card title and make up the bulk of
+                            the card's content.
+                          </Card.Text>
+                          <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                        </Card>
+                      </div>
+                      <div className="col-md-3"><Card style={{ width: '18rem' }}>
+                        <Image alt="Vercel logo" src={Section2Image2} width={200} height={200} />
+                        <Card.Body>
+                          <Card.Title>Card Title</Card.Title>
+                          <Card.Text>
+                            Some quick example text to build on the card title and make up the bulk of
+                            the card's content.
+                          </Card.Text>
+                          <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                        </Card>
+                      </div>
+                      <div className="col-md-3"><Card style={{ width: '18rem' }}>
+                        <Image alt="Vercel logo" src={Section2Image2} width={200} height={200} />
+                        <Card.Body>
+                          <Card.Title>Card Title</Card.Title>
+                          <Card.Text>
+                            Some quick example text to build on the card title and make up the bulk of
+                            the card's content.
+                          </Card.Text>
+                          <Button variant="primary">Go somewhere</Button>
+                        </Card.Body>
+                        </Card>
+                      </div>
+                    </div>
+                </div>
+
+
+
+
             </div>
             <button>
               <a href="#">SEE MORE PRODUCTS</a>
