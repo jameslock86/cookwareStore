@@ -45,11 +45,24 @@ const updateUsersCart = async (req, res, db) => {
     const uid = ObjectId(userId);
     if (req.body.userId) {
       //check if a cart already exist for user
+      const cartExist = checkIfCartExist(uid, db);
+      //cartExist should be an object with user's cart info or null
       if (cartExist) {
-        //if cart exist, check if product exist in cart
-        //if product exist, check quantity
-        //if quantity is the same, do nothing
-        //if qantity is different, update qantity
+        //check if product exist in cart
+        const productExist = checkProductInUsersCart(cartExist, products);
+        //productExist should be an array of products that exist or null
+        if (productExist) {
+          //check quantity
+          const productQuantity = checkProductQuantity(productExist, products);
+          //productQuantity should be a number of quantity
+          if (productQuantity) {
+            //if quantity is the same, do nothing
+          } else {
+            //if qantity is different, update qantity
+          }
+        } else {
+          //if product does not exist, add product to users cart
+        }
       } else {
         //if cart doesn't exist, add cart with products by using update function
       }
@@ -60,36 +73,15 @@ const updateUsersCart = async (req, res, db) => {
     console.log("err", err);
   }
 };
-const addProductToUsersCart = async (req, res, db) => {
-  try {
-    const { products, userId } = req.body;
-    const id = ObjectId(userId);
-    if (products.length > 0) {
-      const isProductInCart = checkProductInUsersCart(id, products, db);
-      if (isProductInCart) {
-        console.log("isProductInCart", isProductInCart);
-        //compare quantity
-
-        //update products quantity if needed
-        // updateProductsInventory(products);
-        res.status(200).json({ msg: "quantity updated" });
-      }
-      // else {
-      //   //add product to cart
-      //   addProductToCart(userId, products, db);
-      //   //update products collection quantity
-      //   updateProductsInventory(products);
-      //   res.status(200).json({ msg: "Product has been added to user's cart" });
-      // }
-    }
-  } catch (err) {
-    console.log("err", err);
-  }
-};
 
 const deleteProductsFromUsersCart = async (req, res, db) => {};
 
 /* Helper Functions */
+const checkIfCartExist = async (userId, db) => {
+  const cart = await db.collection(collection).findOne({ userId });
+  console.log("cart", cart);
+  return cart;
+};
 const checkProductInUsersCart = async (uid, userProducts, db) => {
   let productResults;
   const cart = await db.collection(collection).findOne({ userId: uid });
