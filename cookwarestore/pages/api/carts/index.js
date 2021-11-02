@@ -45,11 +45,14 @@ const updateUsersCart = async (req, res, db) => {
     const uid = ObjectId(userId);
     if (req.body.userId) {
       //check if a cart already exist for user
-      //if cart doesn't exist, add cart with products by using update function
-      //if cart exist, check if product exist in cart
-      //if product exist, check quantity
-      //if quantity is the same, do nothing
-      //if qantity is different, update qantity
+      if (cartExist) {
+        //if cart exist, check if product exist in cart
+        //if product exist, check quantity
+        //if quantity is the same, do nothing
+        //if qantity is different, update qantity
+      } else {
+        //if cart doesn't exist, add cart with products by using update function
+      }
     } else {
       res.json({ msg: "please include user's id" });
     }
