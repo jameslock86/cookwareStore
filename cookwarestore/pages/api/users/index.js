@@ -13,15 +13,15 @@ export default async function usersHandler(req, res) {
 }
 
 const getUsers = (req, res, db) => {};
-const addUser = (req, res, db) => {};
-
-/* Helper Functions */
-
-const checkIfUserExist = async (db, userId) => {
-  const user = await db.collection("user").findOne({ _id: userId });
-  if (user) {
-    return { userExist: true, userInDB: user };
+const addUser = (req, res, db) => {
+  //note: Make sure to send user's _id to client-side for cart to be added for user.
+  //check if user Exist
+  if (req.body.userId) {
+    //locate user in users collection database
+    //add fields to existing user
   } else {
-    return { userExist: false, userInDB: null };
+    //create a new user
   }
 };
+
+/* Helper Functions */
