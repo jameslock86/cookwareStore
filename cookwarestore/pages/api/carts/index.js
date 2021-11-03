@@ -43,15 +43,19 @@ const updateUsersCart = async (req, res, db) => {
   try {
     const { userId, products } = req.body;
     const uid = ObjectId(userId);
-    if (req.body.userId) {
+
+    if (userId) {
       //check if a cart already exist for user
-      const cartExist = checkIfCartExist(uid, db);
+      const cartExist = await checkIfCartExist(userId, db);
       //cartExist should be an object with user's cart info or null
       if (cartExist) {
+        //not deconstructing for name conflict reasons
+        const dbProducts = cartExist.products;
+        // console.log("in cartExist if statement", dbProducts);
         //check if product exist in cart
-        const productExist = checkProductInUsersCart(cartExist, products);
+        const productExist = checkCartForProducts(dbProducts, products);
         //productExist should be an array of products that exist or null
-        if (productExist) {
+        if (productExist.length === 0) {
           //check quantity
           const productQuantity = checkProductQuantity(productExist, products);
           //productQuantity should be a number of quantity
@@ -62,12 +66,15 @@ const updateUsersCart = async (req, res, db) => {
           }
         } else {
           //if product does not exist, add product to users cart
+          // const product = await addProductToCart(productExist)
         }
       } else {
         //if cart doesn't exist, add cart with products by using update function
+        const cart = await addCart(userId, products, db);
+        res.status(200).json({ msg: "cart added for user", cart: cart });
       }
     } else {
-      res.json({ msg: "please include user's id" });
+      res.json({ msg: "please include userId" });
     }
   } catch (err) {
     console.log("err", err);
@@ -79,22 +86,26 @@ const deleteProductsFromUsersCart = async (req, res, db) => {};
 /* Helper Functions */
 const checkIfCartExist = async (userId, db) => {
   const cart = await db.collection(collection).findOne({ userId });
-  console.log("cart", cart);
   return cart;
 };
-const checkProductInUsersCart = async (uid, userProducts, db) => {
-  let productResults;
-  const cart = await db.collection(collection).findOne({ userId: uid });
-  if (cart) {
-    const { products, userId, _id } = cart;
-    for (let i = 0; i < userProducts.length; i++) {
-      productResults = products.filter((product) => {
-        return product === userProducts[i];
-      });
-    }
-    console.log("productResults", productResults);
-  } else {
-    console.log("cart", cart);
+
+const addCart = async (userId, products, db) => {
+  let cartAdded = await db.collection(collection).insert({ userId, products });
+  return cartAdded.ops;
+};
+
+const checkCartForProducts = (dbProducts, products) => {
+  //check client-side products against database products to makes sure client-side products are in database cart
+  //return empty array if all products exist
+  //return a list of products that don't exist in database
+  if (dbProducts.length === products.length) {
+    const filteredProducts = dbProducts.filter((dbProduct, i) => {
+      console.log("dbProduct", dbProduct);
+      console.log("products", products);
+      return dbProduct.productId !== products[i].productId;
+    });
+    console.log("fileteredProducts", filteredProducts);
+    return filteredProducts;
   }
 };
 
@@ -114,6 +125,7 @@ const addProductToCart = async (product) => {
   );
   return result.ok;
 };
+const checkProductQuantity = () => {};
 
 const updateProductsInventory = async (products) => {};
 /*
