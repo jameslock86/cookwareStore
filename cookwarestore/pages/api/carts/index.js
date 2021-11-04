@@ -53,11 +53,12 @@ const updateUsersCart = async (req, res, db) => {
         const dbProducts = cartExist.products;
         // console.log("in cartExist if statement", dbProducts);
         //check if product exist in cart
-        const productExist = checkCartForProducts(dbProducts, products);
-        //productExist should be an array of products that exist or null
-        if (productExist.length === 0) {
+        const filteredProducts = await compare(products, dbProducts);
+        //filteredProducts should be an array of products that don't exist in database or an empty array
+        if (filteredProducts.length === 0) {
+          console.log("check quantity");
           //check quantity
-          const productQuantity = checkProductQuantity(productExist, products);
+          const productQuantity = checkProductQuantity();
           //productQuantity should be a number of quantity
           if (productQuantity) {
             //if quantity is the same, do nothing
@@ -65,12 +66,13 @@ const updateUsersCart = async (req, res, db) => {
             //if qantity is different, update qantity
           }
         } else {
-          //if product does not exist, add product to users cart
-          // const product = await addProductToCart(productExist)
+          //if product(s) do not exist, add product(s) to users cart
+          const results = await addProductsToCart(filteredProducts, userId, db);
+          res.status(200).json(results);
         }
       } else {
         //if cart doesn't exist, add cart with products by using update function
-        const cart = await addCart(userId, products, db);
+        const cart = await addCart(products, userId, db);
         res.status(200).json({ msg: "cart added for user", cart: cart });
       }
     } else {
@@ -89,41 +91,52 @@ const checkIfCartExist = async (userId, db) => {
   return cart;
 };
 
-const addCart = async (userId, products, db) => {
-  let cartAdded = await db.collection(collection).insert({ userId, products });
+const addCart = async (products, userId, db) => {
+  let cartAdded = await db
+    .collection(collection)
+    .insert({ userId, products: products || [] });
   return cartAdded.ops;
 };
 
-const checkCartForProducts = (dbProducts, products) => {
-  //check client-side products against database products to makes sure client-side products are in database cart
+const compare = async (products, dbProducts) => {
   //return empty array if all products exist
   //return a list of products that don't exist in database
-  if (dbProducts.length === products.length) {
-    const filteredProducts = dbProducts.filter((dbProduct, i) => {
-      console.log("dbProduct", dbProduct);
-      console.log("products", products);
-      return dbProduct.productId !== products[i].productId;
-    });
-    console.log("fileteredProducts", filteredProducts);
-    return filteredProducts;
-  }
+  const results = products.filter(
+    ({ productId: id1 }) =>
+      !dbProducts.some(({ productId: id2 }) => id2 === id1)
+  );
+  return results;
 };
 
-const addProductToCart = async (product) => {
-  const { result } = await db.collection(collection).update(
-    {
-      userId: id,
-    },
-    {
-      $push: {
-        products: {
-          productId: product.productId,
-          quantity: product.quantity,
-        },
+const addProductsToCart = async (products, userId, db) => {
+  let results = [];
+  for (let i = 0; i < products.length; i++) {
+    let result = await db.collection(collection).update(
+      {
+        userId,
       },
+      {
+        $push: {
+          products: {
+            productId: products[i].productId,
+            quantity: products[i].quantity,
+          },
+        },
+      }
+    );
+    if (result.result.ok === 1) {
+      results.push(products[i]);
     }
-  );
-  return result.ok;
+  }
+  const finalResults = await compare(products, results);
+  if (finalResults.length === 0) {
+    return { msg: "Product(s) have been added", productsAdded: results };
+  } else {
+    return {
+      msg: "Something went wrong product(s) were not added",
+      productsNotAdded: finalResults,
+    };
+  }
 };
 const checkProductQuantity = () => {};
 
