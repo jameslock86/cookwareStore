@@ -54,10 +54,9 @@ const updateUsersCart = async (req, res, db) => {
         // console.log("in cartExist if statement", dbProducts);
         //check if product exist in cart
         const filteredProducts = await compare(products, dbProducts);
-        console.log("filteredProducts", filteredProducts);
-
         //filteredProducts should be an array of products that don't exist in database or an empty array
         if (filteredProducts.length === 0) {
+          console.log("check quantity");
           //check quantity
           const productQuantity = checkProductQuantity();
           //productQuantity should be a number of quantity
@@ -68,12 +67,8 @@ const updateUsersCart = async (req, res, db) => {
           }
         } else {
           //if product(s) do not exist, add product(s) to users cart
-          console.log("filteredProducts", filteredProducts);
-          const productsAdded = await addProductsToCart(
-            filteredProducts,
-            userId,
-            db
-          );
+          const results = await addProductsToCart(filteredProducts, userId, db);
+          res.status(200).json(results);
         }
       } else {
         //if cart doesn't exist, add cart with products by using update function
@@ -114,28 +109,34 @@ const compare = async (products, dbProducts) => {
 };
 
 const addProductsToCart = async (products, userId, db) => {
-  console.log("products", products);
-  let results;
+  let results = [];
   for (let i = 0; i < products.length; i++) {
-    await db.collection(collection).update(
+    let result = await db.collection(collection).update(
       {
         userId,
       },
       {
         $push: {
           products: {
-            productId: product.productId,
-            quantity: product.quantity,
+            productId: products[i].productId,
+            quantity: products[i].quantity,
           },
         },
       }
     );
+    if (result.result.ok === 1) {
+      results.push(products[i]);
+    }
   }
-  // products.forEach(async (product) => {
-  //   console.log("results", results);
-  // });
-  console.log("results", results);
-  return results;
+  const finalResults = await compare(products, results);
+  if (finalResults.length === 0) {
+    return { msg: "Product(s) have been added", productsAdded: results };
+  } else {
+    return {
+      msg: "Something went wrong product(s) were not added",
+      productsNotAdded: finalResults,
+    };
+  }
 };
 const checkProductQuantity = () => {};
 
