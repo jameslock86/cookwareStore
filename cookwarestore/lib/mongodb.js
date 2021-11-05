@@ -30,103 +30,52 @@
 // // Export a module-scoped MongoClient promise. By doing this in a
 // // separate module, the client can be shared across functions.
 // export default clientPromise;
-/************************************************************* */
-// import { MongoClient } from "mongodb";
-
-// const MONGODB_URI = process.env.MONGODB_URI;
-// const MONGODB_DB = process.env.MONGODB_DB;
-
-// // check the MongoDB URI
-// if (!MONGODB_URI) {
-//   throw new Error("Define the MONGODB_URI environmental variable");
-// }
-
-// // check the MongoDB DB
-// if (!MONGODB_DB) {
-//   throw new Error("Define the MONGODB_DB environmental variable");
-// }
-
-// let cachedClient = null;
-// let cachedDb = null;
-
-// export async function connectToDatabase() {
-//   // check the cached.
-//   if (cachedClient && cachedDb) {
-//     // load from cache
-//     return {
-//       client: cachedClient,
-//       db: cachedDb,
-//     };
-//   }
-
-//   // set the connection options
-//   const opts = {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   };
-
-//   // Connect to cluster
-//   let client = new MongoClient(MONGODB_URI, opts);
-//   await client.connect();
-//   let db = client.db(MONGODB_DB);
-
-//   // set cache
-//   cachedClient = client;
-//   cachedDb = db;
-
-//   return {
-//     client: cachedClient,
-//     db: cachedDb,
-//   };
-// }
-
-/************************************************ */
 
 import { MongoClient } from "mongodb";
-import { ObjectId } from "mongodb";
-const URI = process.env.MONGODB_URI;
 
-//variables
-const dbName = process.env.MONGO_DB;
-const mongoOptions = { useNewUrlParser: true, useUnifiedTopology: true };
+const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_DB = process.env.MONGODB_DB;
 
-/*************************************************************/
+// check the MongoDB URI
+if (!MONGODB_URI) {
+  throw new Error("Define the MONGODB_URI environmental variable");
+}
 
-const client = new MongoClient(URI, mongoOptions);
+// check the MongoDB DB
+if (!MONGODB_DB) {
+  throw new Error("Define the MONGODB_DB environmental variable");
+}
 
-const state = {
-  db: null,
-};
+let cachedClient = null;
+let cachedDb = null;
 
-const connect = async (cb) => {
-  if (state.db) {
-    cb();
-  } else {
-    MongoClient.connect(URI, mongoOptions, (err, client) => {
-      if (err) {
-        cb(err);
-      } else {
-        state.db = client.db(dbName);
-        cb();
-      }
-    });
+export async function connectToDatabase() {
+  // check the cached.
+  if (cachedClient && cachedDb) {
+    // load from cache
+    return {
+      client: cachedClient,
+      db: cachedDb,
+    };
   }
-};
 
-await connect((err) => {
-  if (err) {
-    console.log("unable to connect to database");
-    process.exit(1);
-  } else {
-    console.log("connected to database, app listening on port 3000");
-  }
-});
+  // set the connection options
+  const opts = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  };
 
-export const getPrimaryKey = (_id) => {
-  return ObjectId(_id);
-};
+  // Connect to cluster
+  let client = new MongoClient(MONGODB_URI, opts);
+  await client.connect();
+  let db = client.db(MONGODB_DB);
 
-export const getDB = async () => {
-  return state.db;
-};
-export default { getDB, getPrimaryKey, connect, client };
+  // set cache
+  cachedClient = client;
+  cachedDb = db;
+
+  return {
+    client: cachedClient,
+    db: cachedDb,
+  };
+}

@@ -1,5 +1,6 @@
-// import { connectToDatabase } from "../lib/mongodb";
-const db = require("../lib/mongodb");
+import { connectToDatabase } from "../lib/mongodb";
+
+const { db } = await connectToDatabase();
 const cartCollection = "carts";
 /*Make changes to database */
 const addCartDAL = async (cart) => {
@@ -16,10 +17,7 @@ const addQuantityDAL = async () => {};
 /*Checks before making changes to database*/
 const checkIfCartExist = async (userId) => {
   return new Promise(async (resolve, reject) => {
-    const dbState = await db.getDB();
-    console.log("dbState", dbState);
-    const cart = await dbState.collection(cartCollection);
-    const DBCart = await cart.findOne({ userId });
+    const DBCart = db.collection(cartCollection).findOne({ userId });
     if (DBCart) {
       resolve(DBCart);
     } else {
