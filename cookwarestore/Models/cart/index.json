@@ -5,7 +5,8 @@
     "products":[
       {
         "productId":"",
-        "quantity": 0
+        "quantity": 0,
+        "totalPrice": 0
       }
     ]
   }
