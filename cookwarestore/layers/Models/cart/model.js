@@ -2,10 +2,9 @@ class Cart {
   cartId(cart) {
     return cart._id;
   }
-  productId(cart) {
-    return cart.productId;
-  }
+  products(cart) {}
   quantity(cart) {
+    //quantity is nested within products array in cart object
     return cart.quantity;
   }
   userId(obj) {

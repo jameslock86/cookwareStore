@@ -6,7 +6,7 @@
       {
         "productId":"",
         "quantity": 0,
-        "totalPrice": 0
+        "price": 0
       }
     ]
   }

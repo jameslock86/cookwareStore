@@ -1,10 +1,8 @@
-// import { connectToDatabase } from "../../../lib/mongodb";
+import { addCartSL, updateCartSL } from "../../../layers/ServiceLayer/cart";
 
-import { addCartSL } from "../../../ServiceLayer/cart";
 const collection = "carts";
-export default async function cartsHandler(req, res) {
-  // const { db } = await connectToDatabase();
 
+export default async function cartsHandler(req, res) {
   switch (req.method) {
     case "POST":
       return addCart(req, res);
@@ -23,7 +21,7 @@ const addCart = async (req, res) => {
     if (results) {
       res.status(200).json(results);
     } else {
-      res.json({ msg: "Something went wrong. Product(s) where not added" });
+      res.json({ msg: "Something went wrong. Cart where not added" });
     }
   } catch (err) {
     console.log("err", err);
