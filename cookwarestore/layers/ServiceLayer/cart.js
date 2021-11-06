@@ -1,21 +1,20 @@
 import {
   addCartDAL,
-  addProductDAL,
+  updateUsersCartDAL,
   addQuantityDAL,
-  checkIfCartExist,
-  checkIfProductExistInCart,
-  checkQuantityOfProductInCart,
-  getProductsFromCart,
+  checkIfCartExistDAL,
+  checkIfProductExistInCartDAL,
+  checkQuantityOfProductInCartDAL,
+  getProductsFromCartDAL,
+  getUsersCartDAL,
 } from "../DataAccessLayer/cart";
-
 import Cart from "../Models/cart/model";
 
 const cartModel = new Cart();
 
 const addCartSL = async (cart) => {
   const userId = cartModel.userId(cart);
-
-  const cartExist = await checkIfCartExist(userId);
+  const cartExist = await checkIfCartExistDAL(userId);
 
   if (cartExist) {
     return { msg: "cart already exist for this user" };
@@ -25,14 +24,22 @@ const addCartSL = async (cart) => {
   }
 };
 
-const updateCartSL = async (obj) => {
-  // const userId = cartModel.userId(obj);
-  // const DBproducts = await getProductsFromCart(userId);
-  // console.log("old Products", DBproducts);
-  // const productExist = await checkIfProductExistInCart();
-  // if (productExist) {
-  // } else {
-  // }
+const updateCartSL = async (cartId, products) => {
+  const isUpdated = await updateUsersCartDAL(cartId, products);
+  const dbCart = await getUsersCartDAL(cartId);
+  if (isUpdated) {
+    return {
+      msg: "Product(s) have been added",
+      cartInDB: dbCart,
+    };
+  } else {
+    return {
+      msg: "Something went wrong. Product(s) were not updated",
+      cartInDB: dbCart,
+      cartIdReceived: cartId,
+      productsReceived: products,
+    };
+  }
 };
 
 export { addCartSL, updateCartSL };

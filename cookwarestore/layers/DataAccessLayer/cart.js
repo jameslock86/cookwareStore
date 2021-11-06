@@ -5,23 +5,40 @@ const cartCollection = "carts";
 
 /*Make changes to database */
 const addCartDAL = async (cart) => {
+  const { userId, products } = cart;
   return new Promise(async (resolve, reject) => {
-    let productIds = {};
-    cart.products.forEach(({ productId, quantity, price }) => {
-      productIds[productId] = { quantity, price };
-    });
-    console.log("productIds", productIds);
     await db
       .collection(cartCollection)
-      .insertOne({ userId: cart.userId }, (err, results) => {
+      .insertOne({ userId, products }, (err, results) => {
         if (err) reject(err);
         resolve(results.ops[0]);
       });
   });
 };
 
+const updateUsersCartDAL = async (cartId, products) => {
+  return new Promise(async (resolve, reject) => {
+    let result = await db.collection(cartCollection).update(
+      {
+        cartId,
+      },
+      {
+        $set: {
+          products: products,
+        },
+      }
+    );
+
+    if (result.result.ok === 1) {
+      resolve(true);
+    } else {
+      reject(false);
+    }
+  });
+};
+
 /*Checks before making changes to database*/
-const checkIfCartExist = async (userId) => {
+const checkIfCartExistDAL = async (userId) => {
   return new Promise(async (resolve, reject) => {
     const DBCart = db.collection(cartCollection).findOne({ userId });
     if (DBCart) {
@@ -33,17 +50,22 @@ const checkIfCartExist = async (userId) => {
 };
 
 /*Retrieve data from database*/
-const getProductsFromCart = async (userId) => {
+const getProductsFromCartDAL = async (userId) => {
   const cart = await db.collection(cartCollection).findOne({ userId });
   const products = cart.products;
   return products;
 };
+
+const getUsersCartDAL = async (cartId) => {
+  const dbCart = await db.collection(cartCollection).findOne({ cartId });
+  return dbCart;
+};
 export {
   addCartDAL,
-  // addProductDAL,
-  // addQuantityDAL,
-  checkIfCartExist,
+  updateUsersCartDAL,
+  checkIfCartExistDAL,
   // checkIfProductExistInCart,
   // checkQuantityOfProductInCart,
-  getProductsFromCart,
+  getProductsFromCartDAL,
+  getUsersCartDAL,
 };
