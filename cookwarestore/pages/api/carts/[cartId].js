@@ -10,8 +10,9 @@ export default async function cartsHandler(req, res) {
 }
 
 const updateUsersCart = async (req, res) => {
+  const { cartId } = req.query;
   try {
-    const results = await updateCartSL(req.query, req.body);
+    const results = await updateCartSL(cartId, req.body);
     if (results) {
       res.status(200).json(results);
     } else {
