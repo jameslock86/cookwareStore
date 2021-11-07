@@ -1,13 +1,13 @@
-import { addCartSL, updateCartSL } from "../../../layers/ServiceLayer/cart";
+import { addCartSL } from "../../../layers/ServiceLayer/cart";
 
 const collection = "carts";
 
 export default async function cartsHandler(req, res) {
   switch (req.method) {
+    case "GET":
+      return getUsersCart(req, res);
     case "POST":
       return addCart(req, res);
-    case "PATCH":
-      return updateUsersCart(req, res);
     case "DELETE":
       return deleteProductsFromUsersCart(req, res);
     default:
@@ -21,7 +21,7 @@ const addCart = async (req, res) => {
     if (results) {
       res.status(200).json(results);
     } else {
-      res.json({ msg: "Something went wrong. Cart where not added" });
+      res.json({ msg: "Something went wrong. Cart was not added" });
     }
   } catch (err) {
     console.log("err", err);

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../lib/mongodb";
 
 const { db } = await connectToDatabase();
@@ -10,30 +11,29 @@ const addCartDAL = async (cart) => {
     await db
       .collection(cartCollection)
       .insertOne({ userId, products }, (err, results) => {
-        if (err) reject(err);
-        resolve(results.ops[0]);
+        if (err) reject({ err: err, status: false });
+        resolve({ response: results.ops[0], status: true });
       });
   });
 };
 
 const updateUsersCartDAL = async (cartId, products) => {
   return new Promise(async (resolve, reject) => {
-    let result = await db.collection(cartCollection).update(
+    const id = ObjectId(cartId);
+    await db.collection(cartCollection).findOneAndUpdate(
       {
-        cartId,
+        _id: id,
       },
       {
         $set: {
           products: products,
         },
+      },
+      (err, res) => {
+        if (err) reject({ err: err, status: false });
+        resolve({ response: res.value, status: true });
       }
     );
-
-    if (result.result.ok === 1) {
-      resolve(true);
-    } else {
-      reject(false);
-    }
   });
 };
 
@@ -64,8 +64,6 @@ export {
   addCartDAL,
   updateUsersCartDAL,
   checkIfCartExistDAL,
-  // checkIfProductExistInCart,
-  // checkQuantityOfProductInCart,
   getProductsFromCartDAL,
   getUsersCartDAL,
 };
