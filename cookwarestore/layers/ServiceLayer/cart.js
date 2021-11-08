@@ -1,3 +1,4 @@
+import { Db } from "mongodb";
 import {
   addCartDAL,
   updateUsersCartDAL,
@@ -5,6 +6,10 @@ import {
   getUsersCartDAL,
 } from "../DataAccessLayer/cart";
 
+const getUsersCartSL = async (userId) => {
+  const usersCart = await getUsersCartDAL(userId);
+  return usersCart;
+};
 const addCartSL = async (cart) => {
   const { userId } = cart;
   const cartExist = await checkIfCartExistDAL(userId);
@@ -23,15 +28,18 @@ const addCartSL = async (cart) => {
 
 const updateCartSL = async (cartId, obj) => {
   const { userId, products } = obj;
+  //for security reasons we are using cartId in the url to find the user's cart
   const isUpdated = await updateUsersCartDAL(cartId, products);
-  const dbCart = await getUsersCartDAL(cartId);
+  const dbCart = await getUsersCartDAL(userId);
   if (isUpdated.status) {
     return {
+      status: true,
       msg: "Product(s) has been updated",
       updatedCart: isUpdated.response,
     };
   } else {
     return {
+      status: false,
       msg: "Something went wrong. Product(s) were not updated",
       cartInDB: dbCart,
       cartIdReceived: cartId,
@@ -40,4 +48,4 @@ const updateCartSL = async (cartId, obj) => {
   }
 };
 
-export { addCartSL, updateCartSL };
+export { addCartSL, updateCartSL, getUsersCartSL };
