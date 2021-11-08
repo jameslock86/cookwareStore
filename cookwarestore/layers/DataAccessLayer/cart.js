@@ -56,8 +56,8 @@ const getProductsFromCartDAL = async (userId) => {
   return products;
 };
 
-const getUsersCartDAL = async (cartId) => {
-  const dbCart = await db.collection(cartCollection).findOne({ cartId });
+const getUsersCartDAL = async (id) => {
+  const dbCart = await db.collection(cartCollection).findOne({ userId: id });
   return dbCart;
 };
 export {

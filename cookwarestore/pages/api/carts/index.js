@@ -1,4 +1,4 @@
-import { addCartSL } from "../../../layers/ServiceLayer/cart";
+import { addCartSL, getUsersCartSL } from "../../../layers/ServiceLayer/cart";
 
 const collection = "carts";
 
@@ -15,6 +15,19 @@ export default async function cartsHandler(req, res) {
   }
 }
 
+const getUsersCart = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    const results = await getUsersCartSL(userId);
+    if (results) {
+      res.status(200).json(results);
+    } else {
+      res.json({ msg: "User's cart not found", userIdReceived: userId });
+    }
+  } catch (err) {
+    console.log("err", err);
+  }
+};
 const addCart = async (req, res) => {
   try {
     const results = await addCartSL(req.body);
