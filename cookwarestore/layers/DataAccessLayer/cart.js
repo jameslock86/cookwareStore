@@ -5,18 +5,19 @@ const { db } = await connectToDatabase();
 const cartCollection = "carts";
 
 /*Make changes to database */
-const addCartDAL = async (cart) => {
+const addUsersCartDAL = async (cart) => {
   const { userId, products } = cart;
   return new Promise(async (resolve, reject) => {
     await db
       .collection(cartCollection)
-      .insertOne({ userId, products }, (err, results) => {
-        if (err) reject({ err: err, status: false });
-        resolve({ response: results.ops[0], status: true });
+      .insertOne({ userId, products: products || [] }, (err, results) => {
+        if (err) reject(err);
+        resolve(results.ops[0]);
       });
   });
 };
 
+//updating user's products
 const updateUsersCartDAL = async (cartId, products) => {
   return new Promise(async (resolve, reject) => {
     const id = ObjectId(cartId);
@@ -29,41 +30,39 @@ const updateUsersCartDAL = async (cartId, products) => {
           products: products,
         },
       },
+      { returnDocument: "after" },
       (err, res) => {
-        if (err) reject({ err: err, status: false });
-        resolve({ response: res.value, status: true });
+        if (err) reject(err);
+        resolve(res.value);
       }
     );
   });
 };
 
 /*Checks before making changes to database*/
-const checkIfCartExistDAL = async (userId) => {
+const checkUsersCartExistDAL = async (userId) => {
   return new Promise(async (resolve, reject) => {
-    const DBCart = db.collection(cartCollection).findOne({ userId });
-    if (DBCart) {
-      resolve(DBCart);
-    } else {
-      reject(false);
-    }
+    await db.collection(cartCollection).findOne({ userId }, (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
   });
 };
 
 /*Retrieve data from database*/
-const getProductsFromCartDAL = async (userId) => {
-  const cart = await db.collection(cartCollection).findOne({ userId });
-  const products = cart.products;
-  return products;
-};
-
 const getUsersCartDAL = async (id) => {
-  const dbCart = await db.collection(cartCollection).findOne({ userId: id });
-  return dbCart;
+  return new Promise(async (resolve, reject) => {
+    await db
+      .collection(cartCollection)
+      .findOne({ userId: id }, (err, results) => {
+        if (err) reject(err);
+        resolve(results);
+      });
+  });
 };
 export {
-  addCartDAL,
+  addUsersCartDAL,
   updateUsersCartDAL,
-  checkIfCartExistDAL,
-  getProductsFromCartDAL,
+  checkUsersCartExistDAL,
   getUsersCartDAL,
 };
