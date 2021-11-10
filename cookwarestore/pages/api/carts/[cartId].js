@@ -10,7 +10,7 @@ export default async function cartsHandler(req, res) {
     case "DELETE":
       return deleteUsersProducts(req, res);
     default:
-      return "No methods where matched at this endpoint";
+      return res.json({ msg: "PATCH or DELETE request only" });
   }
 }
 
