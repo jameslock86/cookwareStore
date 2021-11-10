@@ -17,7 +17,6 @@ const addUsersCartDAL = async (cart) => {
   });
 };
 
-//updating user's products
 const updateUsersCartDAL = async (cartId, products) => {
   return new Promise(async (resolve, reject) => {
     const id = ObjectId(cartId);
@@ -36,6 +35,18 @@ const updateUsersCartDAL = async (cartId, products) => {
         resolve(res.value);
       }
     );
+  });
+};
+
+const deleteUsersProductsDAL = async (id) => {
+  return new Promise(async (resolve, reject) => {
+    const _id = ObjectId(id);
+    await db
+      .collection(cartCollection)
+      .findOneAndDelete({ _id }, (err, results) => {
+        if (err) reject(err);
+        resolve(results.value);
+      });
   });
 };
 
@@ -63,6 +74,7 @@ const getUsersCartDAL = async (id) => {
 export {
   addUsersCartDAL,
   updateUsersCartDAL,
+  deleteUsersProductsDAL,
   checkUsersCartExistDAL,
   getUsersCartDAL,
 };

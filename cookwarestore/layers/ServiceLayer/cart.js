@@ -1,13 +1,14 @@
 import {
   addUsersCartDAL,
   updateUsersCartDAL,
+  deleteUsersProductsDAL,
   checkUsersCartExistDAL,
   getUsersCartDAL,
 } from "../DataAccessLayer/cart";
 
-const getUsersCartSL = async (userId) => {
+const getUsersCartSL = async (id) => {
   try {
-    const usersCart = await getUsersCartDAL(userId);
+    const usersCart = await getUsersCartDAL(id);
     return usersCart;
   } catch (err) {
     return err;
@@ -29,20 +30,28 @@ const addUsersCartSL = async (cart) => {
   }
 };
 
-const updateUsersCartSL = async (cartId, obj) => {
+const updateUsersCartSL = async (id, obj) => {
   try {
     const { userId, products } = obj;
-    //for security reasons we are using cartId in the url to find the user's cart
-    const isUpdated = await updateUsersCartDAL(cartId, products);
-    if (isUpdated) {
-      return {
-        msg: "Product(s) has been updated",
-        updatedCart: isUpdated.response,
-      };
-    }
+    const cartUpdated = await updateUsersCartDAL(id, products);
+    return cartUpdated;
   } catch (err) {
     return err;
   }
 };
 
-export { addUsersCartSL, updateUsersCartSL, getUsersCartSL };
+const deleteUsersProductsSL = async (id) => {
+  try {
+    const cartDeleted = await deleteUsersProductsDAL(id);
+    return cartDeleted;
+  } catch (err) {
+    return err;
+  }
+};
+
+export {
+  addUsersCartSL,
+  updateUsersCartSL,
+  getUsersCartSL,
+  deleteUsersProductsSL,
+};
