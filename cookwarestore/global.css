@@ -67,3 +67,26 @@
   justify-content:center;
   align-item:center;
 }
+
+/* footer */
+.footerRow{
+  margin:50px 0;
+}
+a.footerLink{
+  text-decoration:none;
+  color: black;
+}
+a.footerLink:hover{
+  color:blue;
+}
+
+
+
+/* About Us page */
+.heroAboutUsSection{
+
+}
+.heroAboutUs{
+  
+  margin:0 20%;
+}
