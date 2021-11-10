@@ -56,3 +56,14 @@
   color:black;
   font-size:12px;
 }
+/* section3 */
+
+.newArivalTitle, .sectionFourTitle{
+  maring-top:50px;
+  margin-bottom:50px;
+}
+.seeMoreButton{
+  display:flex;
+  justify-content:center;
+  align-item:center;
+}
