@@ -20,7 +20,9 @@ export default async function productsHandler(req, res) {
     case "POST":
       return addProduct(req, res, db);
     default:
-      return "GET or POST request only";
+      return res.json({
+        msg: "GET or POST request only",
+      });
   }
 }
 
@@ -37,7 +39,7 @@ const getProducts = async (req, res, db) => {
 //if post products was in [productId].js, you will need to include an id, which doesn't exist, to the endpoint
 
 const addProduct = async (req, res, db) => {
-//note 2: data received from the client-side must be in form-data format
+  //note 2: data received from the client-side must be in form-data format
 
   //receive data in form-data format
   try {
@@ -52,7 +54,6 @@ const addProduct = async (req, res, db) => {
       const { productExist, productInDB } = await checkIfProductExist(
         db,
         title
-
       );
       if (productExist) {
         res.json({ msg: "product already exist", productInDB });

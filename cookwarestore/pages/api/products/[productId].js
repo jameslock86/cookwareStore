@@ -13,6 +13,10 @@ export default async (req, res) => {
       return updateProduct(req, res, db);
     case "DELETE":
       return deleteProduct(req, res, db);
+    default:
+      return res.json({
+        msg: "GET, PATCH, or DELETE request only",
+      });
   }
 };
 

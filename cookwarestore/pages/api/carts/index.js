@@ -10,7 +10,9 @@ export default async function cartsHandler(req, res) {
     case "POST":
       return addUsersCart(req, res);
     default:
-      return "No cases found";
+      return res.json({
+        msg: "GET or POST request only",
+      });
   }
 }
 
@@ -34,20 +36,3 @@ const addUsersCart = async (req, res) => {
     });
   }
 };
-
-/* Helper Functions */
-
-const compare = async (products, dbProducts) => {
-  //return empty array if all products exist
-  //return a list of products that don't exist in database
-  const results = products.filter(
-    ({ productId: id1 }) =>
-      !dbProducts.some(({ productId: id2 }) => id2 === id1)
-  );
-  return results;
-};
-
-/*
-*Edge Cases* 
-1. If user doesn't exist create a session 
-*/
