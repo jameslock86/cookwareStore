@@ -1,4 +1,5 @@
 import Navbar from '../navbar/navbar'
+import Footer from '../footer/Footer'
 import React from 'react'
 
 export default function SimpleLayout(props) {
@@ -13,6 +14,7 @@ export default function SimpleLayout(props) {
           </div>
         </div>
       </main>
+      <Footer/>
     </>
   )
 }
