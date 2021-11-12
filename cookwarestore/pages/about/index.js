@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import SimpleLayout from "../../components/layout/simple";
 
 import { Col, Row, Container } from 'react-bootstrap';
@@ -17,6 +18,38 @@ import Section2Image3 from '../../public/breadPan.jpg'
 
 
 export default function About() {
+
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!email || email.length < 3 || loading) return;
+    setLoading(true);
+    fetch
+      .post("/api/subscribe", { email })
+      .then((res) => {
+        setEmail("");
+        setLoading(false);
+
+        if (res.status === 201) {
+          setMessage("E-mail cadastrado com sucesso ⚽");
+        } else {
+          setMessage(
+            "Ocorreu um erro inesperado 🙁, tente novamente mais tarde."
+          );
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.error(err);
+        setMessage(
+          "Ocorreu um erro inesperado 🙁, tente novamente mais tarde."
+        );
+      });
+  };
+
   return (
     <SimpleLayout>
       <div>
@@ -135,7 +168,25 @@ export default function About() {
                       </div>  
                     </div>
         </Row>
-
+        <Row>
+        <div className="newsLetter">
+          <h3 className="text-center">Newsletter</h3>
+          <p className="text-center">Stay up to date with what's happening next, sign up today</p>
+          <form className="d-flex justify-content-center" onSubmit={(e) => handleSubmit(e)}>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="please add your e-mail"
+              className="input"
+            />
+            <button type="submit" disabled={loading} className="">
+              {loading ? "Sending Now..." : "Submit"}
+            </button>
+            {message && <p>{message}</p>}
+          </form>
+        </div>
+        </Row>
       </div>
     </SimpleLayout>
   )
