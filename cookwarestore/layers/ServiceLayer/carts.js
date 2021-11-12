@@ -4,7 +4,7 @@ import {
   deleteUsersProductsDAL,
   checkUsersCartExistDAL,
   getUsersCartDAL,
-} from "../DataAccessLayer/cart";
+} from "../DataAccessLayer/carts";
 
 const getUsersCartSL = async (id) => {
   try {
