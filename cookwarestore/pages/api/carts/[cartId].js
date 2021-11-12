@@ -1,7 +1,7 @@
 import {
   updateUsersCartSL,
   deleteUsersProductsSL,
-} from "../../../layers/ServiceLayer/cart";
+} from "../../../layers/ServiceLayer/carts";
 
 export default async function cartsHandler(req, res) {
   switch (req.method) {

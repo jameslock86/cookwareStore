@@ -1,6 +1,6 @@
 //endpoint to access or add products
 //http://localhost:3000/api/products
-
+import { getProductsSL } from "../../../layers/ServiceLayer/products";
 import formidable from "formidable";
 import { connectToDatabase } from "../../../lib/mongodb";
 
@@ -27,12 +27,8 @@ export default async function productsHandler(req, res) {
 }
 
 const getProducts = async (req, res, db) => {
-  try {
-    const products = await db.collection(collection).find({}).toArray();
-    res.status(200).json(products);
-  } catch (err) {
-    console.log("err", err);
-  }
+  const products = await getProductsSL();
+  res.status(200).json(products);
 };
 
 //note 1: post product is in this file cause [productId].js api is only to access products that already exist
