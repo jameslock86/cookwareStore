@@ -3,7 +3,9 @@
 import formidable from "formidable";
 import { connectToDatabase } from "../../../lib/mongodb";
 import { ObjectId } from "mongodb";
+
 const collection = "products";
+
 export default async (req, res) => {
   const { db } = await connectToDatabase();
   switch (req.method) {
@@ -79,6 +81,6 @@ const deleteProduct = async (req, res, db) => {
     });
     res.status(200).json({ productDeleted: deletedProduct.value });
   } catch (err) {
-    console.log("err", err);
+    console.log("err", err.message);
   }
 };

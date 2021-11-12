@@ -5,11 +5,12 @@
 
 const { connectToDatabase } = require("../../../../lib/mongodb");
 
-export default async function getProductsByCategoryHandler(req, res) {
+export default async (req, res) => {
   try {
     if (req.method === "GET") {
       const { kind } = req.query;
       let { db } = await connectToDatabase();
+      //to access category by material
       if (kind === "material") {
         const { material } = req.query;
         const ProductsByCatergoryMaterial = await db
@@ -20,7 +21,7 @@ export default async function getProductsByCategoryHandler(req, res) {
           .toArray();
         res.status(200).json(ProductsByCatergoryMaterial);
       }
-      //to access category type
+      //to access category by type
       if (kind === "type") {
         const { type } = req.query;
         const filterProductsByCatergoryType = await db
@@ -37,4 +38,4 @@ export default async function getProductsByCategoryHandler(req, res) {
   } catch (err) {
     console.log("err", err);
   }
-}
+};

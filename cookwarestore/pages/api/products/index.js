@@ -1,6 +1,7 @@
 //endpoint to access or add products
 //http://localhost:3000/api/products
 import { getProductsSL } from "../../../layers/ServiceLayer/products";
+import { checkIfProductExistDAL } from "../../../layers/DataAccessLayer/products";
 import formidable from "formidable";
 import { connectToDatabase } from "../../../lib/mongodb";
 
@@ -11,12 +12,12 @@ export const config = {
 };
 const collection = "products";
 
-export default async function productsHandler(req, res) {
+export default async (req, res) => {
   const { db } = await connectToDatabase();
 
   switch (req.method) {
     case "GET":
-      return getProducts(req, res, db);
+      return getProducts(req, res);
     case "POST":
       return addProduct(req, res, db);
     default:
@@ -24,20 +25,23 @@ export default async function productsHandler(req, res) {
         msg: "GET or POST request only",
       });
   }
-}
+};
 
-const getProducts = async (req, res, db) => {
-  const products = await getProductsSL();
-  res.status(200).json(products);
+const getProducts = async (req, res) => {
+  try {
+    const products = await getProductsSL();
+    res.status(200).json(products);
+  } catch (err) {
+    console.log("err", err.message);
+  }
 };
 
 //note 1: post product is in this file cause [productId].js api is only to access products that already exist
-//if post products was in [productId].js, you will need to include an id, which doesn't exist, to the endpoint
-
+//note 2: data received from the client-side must be in form-data format
+//note 3: addProduct could not be broken down to service and data access layer due to the use of using formidable to add
+//product images. Upon return values in the service layer, results in this file were undefined due to return values within
+//form.parse function.
 const addProduct = async (req, res, db) => {
-  //note 2: data received from the client-side must be in form-data format
-
-  //receive data in form-data format
   try {
     const form = new formidable.IncomingForm();
     form.uploadDir = "./public/uploads/products";
@@ -47,10 +51,7 @@ const addProduct = async (req, res, db) => {
       const { title, price, description, category } = fields;
       if (err) console.log("err from parsing form-data", err);
       //check if product exist by product title
-      const { productExist, productInDB } = await checkIfProductExist(
-        db,
-        title
-      );
+      const productExist = await checkIfProductExistDAL(title);
       if (productExist) {
         res.json({ msg: "product already exist", productInDB });
       } else {
@@ -74,17 +75,6 @@ const addProduct = async (req, res, db) => {
       }
     });
   } catch (err) {
-    console.log("err", err);
-  }
-};
-
-/* helper functions */
-
-const checkIfProductExist = async (db, title) => {
-  const product = await db.collection(collection).findOne({ title });
-  if (product) {
-    return { productExist: true, productInDB: product };
-  } else {
-    return { productExist: false, productInDB: null };
+    console.log("err", err.message);
   }
 };
