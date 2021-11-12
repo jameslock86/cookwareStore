@@ -5,7 +5,7 @@ const getProductsSL = async () => {
     const products = await getProductsDAL();
     return products;
   } catch (err) {
-    return err;
+    console.log("err", err.message);
   }
 };
 
