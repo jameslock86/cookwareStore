@@ -2,15 +2,12 @@ import { ObjectId } from "mongodb";
 import { connectToDatabase } from "../../lib/mongodb";
 
 const { db } = await connectToDatabase();
-const productCollection = "products";
+const product = "products";
 
-/*Make changes to database */
-
-/*Retrieve data from database*/
-const getProductsDAL = async () => {
+const getAllProductsDAL = async () => {
   return new Promise(async (resolve, reject) => {
     await db
-      .collection(productCollection)
+      .collection(product)
       .find({})
       .toArray((err, results) => {
         if (err) reject(err);
@@ -19,15 +16,15 @@ const getProductsDAL = async () => {
   });
 };
 
-/*Checks before making changes to database*/
-const checkIfProductExistDAL = async (title) => {
+const getProductByIdDAL = async (productId) => {
+  const id = ObjectId(productId);
   return new Promise(async (resolve, reject) => {
-    await db
-      .collection(productCollection)
-      .findOne({ title }, (err, results) => {
-        if (err) reject(err);
-        resolve(results);
-      });
+    await db.collection(product).findOne({ _id: id }, (err, result) => {
+      if (err) reject(err);
+      console.log("results", result);
+      resolve(result);
+    });
   });
 };
-export { getProductsDAL, checkIfProductExistDAL };
+
+export { getAllProductsDAL, getProductByIdDAL };

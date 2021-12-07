@@ -1,12 +1,24 @@
-import { getProductsDAL } from "../DataAccessLayer/products";
+import {
+  getAllProductsDAL,
+  getProductByIdDAL,
+} from "../DataAccessLayer/products";
 
-const getProductsSL = async () => {
+const getAllProductsSL = async () => {
   try {
-    const products = await getProductsDAL();
+    const products = await getAllProductsDAL();
     return products;
   } catch (err) {
     console.log("err", err.message);
   }
 };
 
-export { getProductsSL };
+const getProductByIdSL = async (productId) => {
+  try {
+    const product = await getProductByIdDAL(productId);
+    return product;
+  } catch (err) {
+    console.log("err", err.message);
+  }
+};
+
+export { getAllProductsSL, getProductByIdSL };
