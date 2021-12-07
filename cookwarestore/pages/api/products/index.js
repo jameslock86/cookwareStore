@@ -3,7 +3,6 @@
 import { getProductsSL } from "../../../layers/ServiceLayer/products";
 import { checkIfProductExistDAL } from "../../../layers/DataAccessLayer/products";
 import formidable from "formidable";
-import { connectToDatabase } from "../../../lib/mongodb";
 
 export const config = {
   api: {
@@ -13,16 +12,12 @@ export const config = {
 const collection = "products";
 
 export default async (req, res) => {
-  const { db } = await connectToDatabase();
-
   switch (req.method) {
     case "GET":
       return getProducts(req, res);
-    case "POST":
-      return addProduct(req, res, db);
     default:
       return res.json({
-        msg: "GET or POST request only",
+        msg: "GET request only",
       });
   }
 };
@@ -78,3 +73,5 @@ const addProduct = async (req, res, db) => {
     console.log("err", err.message);
   }
 };
+
+const updateProducts = (req, res) => {};

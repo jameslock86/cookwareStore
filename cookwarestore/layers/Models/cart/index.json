@@ -1,11 +1,12 @@
 
   {
     "userId":"",
-    "products":[
+    "items":[
       {
         "productId":"",
-        "quantity": 0,
-        "price": 0
+        "quantity": 0
       }
-    ]
+    ],
+    
+    "total": 0
   }
