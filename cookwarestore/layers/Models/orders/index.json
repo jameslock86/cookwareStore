@@ -1,0 +1,37 @@
+{ 
+	"userId": "",
+	"paymentId": "",
+  "paymentStatus": "",
+	"status": "",
+	"currency": "",
+	"totalCost": "",
+	"items": [ 
+        {
+          "productId": "",
+            "quantity": "",
+            "price": "",
+            "preTaxTotal": "",
+            "tax": "",
+            "total": ""
+		}, { "productId": "",
+            "quantity": "",
+            "price": "",
+            "preTaxTotal": "",
+            "tax": "",
+            "total": ""
+        } 
+    ],
+	"shipping":  {
+        "address":{
+            "street1": "",
+            "street2": "",
+            "city": "",
+            "state": "",
+            "country": "",
+            "zip": ""
+        },
+
+        "carrier": "",
+        "tracking": ""
+    }
+  }

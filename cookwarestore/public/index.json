@@ -8,7 +8,8 @@
         "type":"dutch oven",
         "material":"cast iron"
 
-    }
+    },
+    "quantity": 35
   },
   {
     "title": "5 qrt dutct oven",
@@ -19,7 +20,8 @@
         "type":"dutch oven",
         "material":"cast iron"
 
-    }
+    },
+    "quantity": 50
   },
   {
     "title": "7 qrt dutct oven",
@@ -30,7 +32,8 @@
         "type":"dutch oven",
         "material":"cast iron"
 
-    }
+    },
+    "quantity": 13
   },
   {
     "title": "10 in Frying Pan",
@@ -41,7 +44,8 @@
         "type":"fry pan",
         "material":"cast iron"
 
-    }
+    },
+    "quantity": 34
   },
   {
     "title": "10 in Crepe Pan",
@@ -52,7 +56,8 @@
         "type":"fry pan",
         "material":"steel"
 
-    }
+    },
+    "quantity": 80
 },
 {
     "title": "Oval Fry Pan",
@@ -63,18 +68,20 @@
         "type":"fry pan",
         "material":"steel"
 
-    }
+    },
+    "quantity": 45
 },
 {
     "title": "8 x 8 Bakeware",
     "price": "$49.99",
     "description": "8 x 8 Bakeware",
-    "image":"public/8inx8inBakeware.jpg",
+    "image":"public/8inBy8inBakeware.jpg",
     "category": {
         "type":"Bakeware",
         "material":"ceramic"
 
-    }
+    },
+    "quantity": 1
 },
 {
     "title": "10 in BreadPan",
@@ -85,7 +92,8 @@
         "type":"Bakeware",
         "material":"cast iron"
 
-    }
+    },
+    "quantity": 2
 },
 {
     "title": "OvalBakeware",
@@ -96,6 +104,7 @@
         "type":"Bakeware",
         "material":"ceramic"
 
-    }
+    },
+    "quantity": 0
 }
 ]
