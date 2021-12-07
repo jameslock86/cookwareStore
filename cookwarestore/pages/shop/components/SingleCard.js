@@ -2,10 +2,9 @@ import { useState, useEffect } from "react";
 import Card from "react-bootstrap/Card";
 import Image from "next/image";
 import Button from "react-bootstrap/Button";
-import photoRouter from "../../../public/photoRouter";
-import tempphoto from "../../../public/4qrtPot.jpg";
+import photoRouter from "./photoRouter";
 
-const SingleCard = ({ title, price, description, image, src }) => {
+const SingleCard = ({ title, price, description, image }) => {
   const [photo, setPhoto] = useState("");
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const SingleCard = ({ title, price, description, image, src }) => {
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Text>{description}</Card.Text>
-        <Button variant="primary">Go somewhere</Button>
+        <Button variant="primary">Add To Cart</Button>
       </Card.Body>
     </Card>
   );

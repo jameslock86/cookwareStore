@@ -1,12 +1,12 @@
-import fourQrtPot from "./4qrtPot.jpg";
-import fiveQrtPot from "./5qrtPot.jpg";
-import sevenQrtPot from "./7qrtPot.jpg";
-import eightByEightBakeware from "./8inBy8inBakeware.jpg";
-import tenInFryPan from "./10inFryPan.jpg";
-import breadPan from "./breadPan.jpg";
-import crepeFryPan from "./crepeFryPan.jpg";
-import ovalBakeware from "./ovalBakeware.jpg";
-import ovalFryPan from "./ovalFryPan.jpg";
+import fourQrtPot from "./../../../public/4qrtPot.jpg";
+import fiveQrtPot from "./../../../public/5qrtPot.jpg";
+import sevenQrtPot from "./../../../public/7qrtPot.jpg";
+import eightByEightBakeware from "./../../../public/8inBy8inBakeware.jpg";
+import tenInFryPan from "./../../../public/10inFryPan.jpg";
+import breadPan from "./../../../public/breadPan.jpg";
+import crepeFryPan from "./../../../public/crepeFryPan.jpg";
+import ovalBakeware from "./../../../public/ovalBakeware.jpg";
+import ovalFryPan from "./../../../public/ovalFryPan.jpg";
 
 const photoRouter = (photoName) => {
   switch (true) {
